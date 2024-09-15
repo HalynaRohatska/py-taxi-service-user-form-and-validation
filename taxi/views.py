@@ -4,7 +4,11 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from taxi.forms import DriverCreationForm, DriverLicenseUpdateForm, CarCreateForm
+from taxi.forms import (
+    DriverCreationForm,
+    DriverLicenseUpdateForm,
+    CarCreateForm
+)
 from taxi.models import Driver, Car, Manufacturer
 
 
@@ -78,7 +82,9 @@ class CarDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         car = self.get_object()
-        context["user_is_driver"] = car.drivers.filter(id=self.request.user.id).exists()
+        context["user_is_driver"] = (
+            car.drivers.filter(id=self.request.user.id).exists()
+        )
         print(context["user_is_driver"])
         return context
 
